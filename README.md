@@ -1,7 +1,7 @@
 <h1 align="center">Raykookie</h1>
 
-<p align="center"><strong>Confeitaria feita à mão, do forno para a sua mesa: o cardápio e o pedido na palma da mão do cliente, e o preço certo de cada doce na da confeiteira.</strong></p>
-<p align="center">Loja online, apps Android (cliente e gestão), painel web e API Java com Pix e cartão: um sistema completo, em produção.</p>
+<p align="center"><strong>Handmade confectionery, from the oven to your table: the menu and the order in the customer's pocket, and the right price for every sweet in the baker's.</strong></p>
+<p align="center">Online store, Android apps (customer and management), web dashboard and a Java API with Pix and card payments: a complete system, in production.</p>
 
 <p align="center">
   <img alt="Next.js 15" src="https://img.shields.io/badge/Next.js-15-000000?logo=nextdotjs&logoColor=white">
@@ -9,345 +9,344 @@
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white">
   <img alt="Tailwind CSS 4" src="https://img.shields.io/badge/Tailwind-4-06B6D4?logo=tailwindcss&logoColor=white">
   <img alt="Flutter" src="https://img.shields.io/badge/Flutter-02569B?logo=flutter&logoColor=white">
-  <img alt="App Android versão 1.0.0 build 17" src="https://img.shields.io/badge/app%20Android-1.0.0%20(17)-D42A76">
-  <img alt="Status: em produção" src="https://img.shields.io/badge/status-em%20produ%C3%A7%C3%A3o-2EA043">
+  <img alt="Android app version 1.0.0 build 17" src="https://img.shields.io/badge/app%20Android-1.0.0%20(17)-D42A76">
+  <img alt="Status: in production" src="https://img.shields.io/badge/status-in%20production-2EA043">
 </p>
 
 <p align="center">
-  <img src="docs/media/hero-loop.gif" width="860" alt="Tela inicial do site da Raykookie: o biscoito rosa do logo treme, leva três mordidas com migalhas saltando e volta ao logo inteiro, em loop contínuo.">
+  <img src="docs/media/hero-loop.gif" width="860" alt="Raykookie website home screen: the pink cookie from the logo shakes, takes three bites with crumbs flying, and returns to the whole logo, in a continuous loop.">
 </p>
 
-> Este repositório é a **vitrine pública** do projeto: README, imagens e animações. O código-fonte é privado. Os nomes de arquivos e pastas citados abaixo existem no repositório de origem.
+> This repository is the project's **public showcase**: README, images and animations. The source code is private. The file and folder names mentioned below exist in the source repository.
 
 ---
 
-## Visão geral
+## Overview
 
-A Raykookie é uma confeitaria artesanal que trabalha **sob encomenda**. Este repositório é o sistema inteiro que a faz funcionar, em produção, de ponta a ponta: a loja que o cliente usa para pedir, o painel que a confeiteira usa para tocar o negócio e a API que liga os dois, com pagamento por Pix e cartão.
+Raykookie is an artisanal confectionery that works **on a made-to-order basis**. This repository describes the entire system that runs it, in production, end to end: the store customers use to place orders, the dashboard the baker uses to run the business, and the API that connects the two, with payments via Pix and card.
 
-| Peça | Tecnologia | Para quem | Pasta |
+| Piece | Technology | For whom | Folder |
 |---|---|---|---|
-| **Site e loja** | Next.js 15, React 19, TypeScript | cliente | `frontend/` |
-| **App Android do cliente** | Flutter | cliente | `mobile-client/` |
-| **Painel web "raykookie business"** | Next.js (mesmo projeto do site) | confeiteira | `frontend/app/(app)`) |
-| **App Android de gestão** | Flutter | confeiteira | `mobile-server/` |
-| **API** | Java 25, Spring Boot, PostgreSQL, Clean Architecture | os dois lados | `backend-java/` |
-| **Pacote comum dos apps** | Dart | os dois apps | `mobile-common/` |
+| **Website and store** | Next.js 15, React 19, TypeScript | customer | `frontend/` |
+| **Customer Android app** | Flutter | customer | `mobile-client/` |
+| **"raykookie business" web dashboard** | Next.js (same project as the website) | baker | `frontend/app/(app)` |
+| **Management Android app** | Flutter | baker | `mobile-server/` |
+| **API** | Java 25, Spring Boot, PostgreSQL, Clean Architecture | both sides | `backend-java/` |
+| **Shared app package** | Dart | both apps | `mobile-common/` |
 
 ```
- navegador ──▶ Vercel (Next.js) ── /api/* ──┐
-                                            ▼
- app cliente ─┐                    API Java (Docker, sempre ligada) ──▶ PostgreSQL
- app gestão  ─┴──────────────────▶   ▲                 │
-                                     │                 └─▶ Mercado Pago (Pix e cartão, webhook assinado)
-                                     └── tarefas agendadas dentro do próprio servidor
+ browser ──▶ Vercel (Next.js) ── /api/* ──┐
+                                          ▼
+ customer app ─┐                 Java API (Docker, always on) ──▶ PostgreSQL
+ mgmt app     ─┴──────────────▶    ▲                │
+                                   │                └─▶ Mercado Pago (Pix and card, signed webhook)
+                                   └── scheduled tasks inside the server itself
 ```
 
-Os dois apps Android são compilados, **assinados** e publicados pelo próprio pipeline.
+Both Android apps are built, **signed** and published by the pipeline itself.
 
-### Lado do cliente
+### Customer side
 
-- **Site** (Next.js): a vitrine da casa. Funciona em qualquer navegador e é pensado para quem chega do Instagram, com o polegar.
-- **App Android** (Flutter): o mesmo mundo no celular, com a conta sempre à mão e avisos quando o pedido muda de etapa. O APK é baixado direto do site.
+- **Website** (Next.js): the house's storefront. Works in any browser and is designed for people arriving from Instagram, using their thumb.
+- **Android app** (Flutter): the same world on the phone, with the account always at hand and notifications when the order changes stage. The APK is downloaded straight from the website.
 
-Para quem quer um doce, seja para presentear, comemorar ou matar a vontade da semana, o caminho é curto:
+For anyone who wants a sweet, whether as a gift, to celebrate, or to satisfy the week's craving, the path is short:
 
-| O que a pessoa faz | Como o produto ajuda |
+| What the person does | How the product helps |
 |---|---|
-| **Escolher** | Cardápio sempre atual, com fotos, categorias e combos. Dá para compartilhar o cardápio por link (e, no app, por QR code). |
-| **Pedir** | Pedido em 5 passos rápidos. Entra com o Google ou com e-mail e senha, e o que já foi escolhido não se perde no login. |
-| **Acompanhar** | Linha do tempo do pedido (recebido, em preparo, pronto, entregue) e aviso no celular a cada mudança. |
-| **Cuidar dos próprios dados** | Tela "Meus dados" com exportação e exclusão da conta. |
+| **Choose** | Always up-to-date menu, with photos, categories and combos. The menu can be shared by link (and, in the app, by QR code). |
+| **Order** | Order in 5 quick steps. Sign in with Google or with email and password, and what was already chosen isn't lost at login. |
+| **Track** | Order timeline (received, in preparation, ready, delivered) and a phone notification on every change. |
+| **Manage their own data** | "My data" screen with account export and deletion. |
 
-### Lado da confeiteira (gestão)
+### Baker side (management)
 
-O painel existe em **duas versões que falam com a mesma API**: o painel web (`raykookie business`, no próprio site, sem link público) e o app Android de gestão. A ideia central é que a confeiteira não precise de planilha: ela cadastra o que compra e o que faz, e o sistema devolve o **preço certo de cada doce**.
+The dashboard comes in **two versions that talk to the same API**: the web dashboard (`raykookie business`, inside the website itself, with no public link) and the Android management app. The core idea is that the baker doesn't need a spreadsheet: she records what she buys and what she makes, and the system returns the **right price for every sweet**.
 
-| Área | O que resolve |
+| Area | What it solves |
 |---|---|
-| **Estoque** | Ingredientes com custo por grama, ml ou unidade calculado a partir da embalagem, alerta de reposição e leitura de **nota fiscal (NFC-e) por QR code** para dar entrada nos itens. |
-| **Receitas e preços** | Cada receita soma ingredientes, mão de obra e rateio dos gastos do mês e **sugere o preço** com a margem escolhida; avisa quando a margem real cai abaixo do mínimo. Um produto pode ter várias receitas (a padrão dá o preço). |
-| **Cardápio** | Escolhe o que aparece no site e no app do cliente (só foto, nome, preço e selos de alergia saem; custo e margem nunca), além de **combos** e **cupons**. |
-| **Pedidos** | Encomendas do site e do app entram sozinhas; as de balcão são lançadas à mão, com link de pagamento Pix. Status de produção, entrega e pagamento. |
-| **Devoluções** | Cancelamento com devolução automática do Pix, solicitações com fotos e decisão da confeiteira. |
-| **Metas e custos** | Metas do mês (faturamento, pedidos, ticket médio, clientes novos) contra o realizado; gastos fixos e variáveis que entram no preço. |
-| **Venda presencial** | Tela de Pix estático por produto que funciona **sem internet e sem login**, para vender na feira. |
-| **Segurança e rastro** | Histórico de auditoria somente-inserção (estoque, receitas, preços, cupons e pedidos), biometria para abrir o app e avisos push de pedido novo. |
+| **Inventory** | Ingredients with cost per gram, ml or unit calculated from the packaging, restock alerts, and **invoice (NFC-e) reading by QR code** to stock items in. |
+| **Recipes and prices** | Each recipe adds up ingredients, labor and a share of the month's expenses and **suggests the price** with the chosen margin; it warns when the real margin falls below the minimum. A product can have several recipes (the default one sets the price). |
+| **Menu** | Chooses what appears on the website and in the customer app (only photo, name, price and allergy badges go out; cost and margin never do), plus **combos** and **coupons**. |
+| **Orders** | Orders from the website and the app arrive on their own; counter orders are entered by hand, with a Pix payment link. Production, delivery and payment status. |
+| **Refunds** | Cancellation with automatic Pix refund, requests with photos, and the baker's decision. |
+| **Goals and costs** | Monthly goals (revenue, orders, average ticket, new customers) against actuals; fixed and variable expenses that go into the price. |
+| **In-person sales** | Static Pix screen per product that works **without internet and without login**, for selling at the fair. |
+| **Security and audit trail** | Insert-only audit history (inventory, recipes, prices, coupons and orders), biometrics to open the app and push notifications for new orders. |
 
 ---
 
-## Galeria de telas
+## Screen gallery
 
-> Todas as telas abaixo são capturas reais do site e dos apps rodando, com **dados fictícios** (cliente, pedidos, estoque e preços de exemplo). A seção do cliente vem primeiro; a de gestão está logo depois, em [Apps de gestão](#apps-de-gestão).
+> All the screens below are real captures of the website and the apps running, with **fictional data** (sample customer, orders, inventory and prices). The customer section comes first; the management one follows right after, in [Management apps](#management-apps).
 
 <p align="center">
-  <img src="docs/media/mockup-apps.webp" width="880" alt="Site em um notebook e o app em dois celulares, mostrando a tela inicial e o cardápio.">
+  <img src="docs/media/mockup-apps.webp" width="880" alt="Website on a laptop and the app on two phones, showing the home screen and the menu.">
 </p>
 
-### Site (desktop)
+### Website (desktop)
 
 <table>
   <tr>
-    <td width="50%" align="center"><img src="docs/media/mockup-web-home.webp" alt="Tela inicial do site: título em serifa, botão Fazer pedido e o biscoito rosa do logo."><br><sub><b>Início</b>: a casa em uma frase e um botão de pedir sempre à vista.</sub></td>
-    <td width="50%" align="center"><img src="docs/media/mockup-web-cardapio.webp" alt="Seção de cardápio do site: categorias fixas no topo e cartões com foto, nome, selos de alérgenos, preço e botão Pedir."><br><sub><b>Cardápio</b>: fotos, selos de alérgenos e um botão Pedir em cada item.</sub></td>
+    <td width="50%" align="center"><img src="docs/media/mockup-web-home.webp" alt="Website home screen: serif title, Fazer pedido (Place order) button and the pink cookie from the logo."><br><sub><b>Home</b>: the house in one sentence and an order button always in view.</sub></td>
+    <td width="50%" align="center"><img src="docs/media/mockup-web-cardapio.webp" alt="Menu section of the website: categories pinned at the top and cards with photo, name, allergen badges, price and an order button."><br><sub><b>Menu</b>: photos, allergen badges and an order button on every item.</sub></td>
   </tr>
   <tr>
-    <td align="center"><img src="docs/media/mockup-web-novo-pedido.webp" alt="Tela Novo pedido no site, passo 1 de 5, com a lista de itens e o total fixo no rodapé."><br><sub><b>Novo pedido</b>: o total acompanha a pessoa na parte de baixo.</sub></td>
-    <td align="center"><img src="docs/media/mockup-web-pedidos.webp" alt="Tela Meus pedidos no site, com a linha do tempo de cada pedido e o status do pagamento."><br><sub><b>Meus pedidos</b>: linha do tempo e situação do pagamento.</sub></td>
+    <td align="center"><img src="docs/media/mockup-web-novo-pedido.webp" alt="New order screen on the website, step 1 of 5, with the item list and the total pinned at the bottom."><br><sub><b>New order</b>: the total follows the person along the bottom.</sub></td>
+    <td align="center"><img src="docs/media/mockup-web-pedidos.webp" alt="My orders screen on the website, with each order's timeline and payment status."><br><sub><b>My orders</b>: timeline and payment status.</sub></td>
   </tr>
   <tr>
-    <td align="center" colspan="2"><img src="docs/media/mockup-web-entrar.webp" width="50%" alt="Tela de entrada do site: botão Continuar com o Google e formulário de e-mail e senha."><br><sub><b>Entrar</b>: com o Google ou com e-mail e senha.</sub></td>
+    <td align="center" colspan="2"><img src="docs/media/mockup-web-entrar.webp" width="50%" alt="Website sign-in screen: Continue with Google button and email and password form."><br><sub><b>Sign in</b>: with Google or with email and password.</sub></td>
   </tr>
 </table>
 
-**O site em movimento**
+**The website in motion**
 
 <table>
   <tr>
-    <td align="center"><img src="docs/media/web-rolagem.gif" width="440" alt="Rolagem da página inicial do site, do topo até o cardápio e de volta ao logo."><br><sub>Da apresentação ao cardápio.</sub></td>
-    <td align="center"><img src="docs/media/web-pedido.gif" width="440" alt="Clique em Pedir num item do cardápio e abertura da tela de novo pedido."><br><sub>Do cardápio ao pedido, a um clique.</sub></td>
+    <td align="center"><img src="docs/media/web-rolagem.gif" width="440" alt="Scrolling the website home page, from the top to the menu and back to the logo."><br><sub>From the introduction to the menu.</sub></td>
+    <td align="center"><img src="docs/media/web-pedido.gif" width="440" alt="Clicking Order on a menu item and the new order screen opening."><br><sub>From the menu to the order, one click away.</sub></td>
   </tr>
 </table>
 
-### App Android
+### Android app
 
 <p align="center">
-  <img src="docs/media/mockup-app-telas.webp" width="880" alt="Quatro telas do app em celulares: início, cardápio, novo pedido e meus pedidos.">
-</p>
-
-<table>
-  <tr>
-    <td width="33%" align="center"><img src="docs/media/mockup-app-home.webp" alt="Tela inicial do app com o título da casa e o botão Fazer pedido."><br><sub><b>Início</b></sub></td>
-    <td width="33%" align="center"><img src="docs/media/mockup-app-itens.webp" alt="Cardápio do app com cartões de itens, incluindo o placeholder da marca para um item sem foto."><br><sub><b>Cardápio</b>: sem foto, entra o símbolo da marca.</sub></td>
-    <td width="33%" align="center"><img src="docs/media/mockup-app-novo-pedido.webp" alt="Novo pedido no app, passo 1 de 5, com um cookie já adicionado e o total no rodapé."><br><sub><b>Novo pedido</b> em 5 passos.</sub></td>
-  </tr>
-  <tr>
-    <td align="center"><img src="docs/media/mockup-app-pedidos.webp" alt="Meus pedidos no app, com linha do tempo e confirmação de pagamento."><br><sub><b>Meus pedidos</b></sub></td>
-    <td align="center"><img src="docs/media/mockup-app-entrar.webp" alt="Entrada do app com Google ou e-mail e senha."><br><sub><b>Entrar</b></sub></td>
-    <td align="center"><img src="docs/media/mockup-app-cardapio.webp" alt="Início do cardápio no app, com o filtro de categorias e o combo em destaque."><br><sub><b>Categorias</b> a um toque.</sub></td>
-  </tr>
-</table>
-
-**O app em movimento**
-
-<table>
-  <tr>
-    <td align="center"><img src="docs/media/app-cardapio.gif" width="300" alt="Rolagem da tela inicial do app até o cardápio e volta ao topo."><br><sub>Navegando pelo cardápio.</sub></td>
-    <td align="center"><img src="docs/media/app-pedido.gif" width="300" alt="Abertura do novo pedido no app, escolha de itens e avanço para o passo Seus dados."><br><sub>Montando um pedido.</sub></td>
-  </tr>
-</table>
-
-> As capturas do app vêm do mesmo código Flutter compilado para web e aberto em uma janela de celular (390×844), contra uma API de mentira. A moldura do aparelho é desenhada em HTML/CSS; o conteúdo da tela é o do app.
-
----
-
-## Apps de gestão
-
-Painel web e app Android da confeiteira, também em capturas reais com dados fictícios (uma confeitaria inventada, com estoque, receitas, pedidos e metas de exemplo). Os preços e margens que aparecem vêm do **mesmo cálculo de produção** (`shared/pricing.ts`), não de números digitados à mão.
-
-<p align="center">
-  <img src="docs/media/mockup-gestao-apps.webp" width="880" alt="Painel web da confeiteira em um notebook e o app de gestão em dois celulares, mostrando o resumo do mês e o estoque de ingredientes.">
-</p>
-
-### Painel web
-
-<table>
-  <tr>
-    <td width="50%" align="center"><img src="docs/media/mockup-gweb-inicio.webp" alt="Início do painel: anel de progresso da meta do mês, faturamento, lucro, próximas entregas, itens para repor e receitas mais lucrativas."><br><sub><b>Início</b>: a meta do mês, as próximas entregas e o que precisa de reposição.</sub></td>
-    <td width="50%" align="center"><img src="docs/media/mockup-gweb-receitas.webp" alt="Receitas e preços: cartões com custo por unidade, preço sugerido, lucro e margem de cada produto."><br><sub><b>Receitas e preços</b>: custo, preço e margem de cada produto, calculados sozinhos.</sub></td>
-  </tr>
-  <tr>
-    <td align="center"><img src="docs/media/mockup-gweb-estoque.webp" alt="Estoque de ingredientes: tabela com quantidade, embalagem, custo por unidade e situação de cada item."><br><sub><b>Estoque</b>: custo por unidade e situação de cada ingrediente.</sub></td>
-    <td align="center"><img src="docs/media/mockup-gweb-pedidos.webp" alt="Pedidos: filtros por status, totais e a lista de encomendas com entrega, valor, status e pagamento."><br><sub><b>Pedidos</b>: da entrada à entrega, com o pagamento ao lado.</sub></td>
-  </tr>
-  <tr>
-    <td align="center"><img src="docs/media/mockup-gweb-metas.webp" alt="Metas de venda: anel de progresso e quatro metas (faturamento, pedidos, ticket médio e clientes novos) contra o realizado."><br><sub><b>Metas</b>: realizado contra o alvo, sem digitar de novo.</sub></td>
-    <td align="center"><img src="docs/media/mockup-gweb-custos.webp" alt="Custos e ajustes: gastos fixos e variáveis do mês e a base do cálculo do preço."><br><sub><b>Custos e ajustes</b>: os gastos do mês entram no preço de cada receita.</sub></td>
-  </tr>
-  <tr>
-    <td align="center"><img src="docs/media/mockup-gweb-cardapio.webp" alt="Cardápio: lista de produtos com chave para aparecer no site, mostrar ingredientes e selos de alergia."><br><sub><b>Cardápio</b>: o que o cliente vê, com selos de alergia.</sub></td>
-    <td align="center"><img src="docs/media/mockup-gweb-entrar.webp" alt="Tela de entrada do painel: painel rosa com a chamada Saiba quanto cobrar por cada doce e o formulário de usuário e senha."><br><sub><b>Entrar</b>: acesso só por URL, sem link na página pública.</sub></td>
-  </tr>
-</table>
-
-### App Android de gestão
-
-<p align="center">
-  <img src="docs/media/mockup-gapp-telas.webp" width="880" alt="Quatro telas do app de gestão em celulares: início, estoque, receitas e pedidos.">
+  <img src="docs/media/mockup-app-telas.webp" width="880" alt="Four app screens on phones: home, menu, new order and my orders.">
 </p>
 
 <table>
   <tr>
-    <td width="33%" align="center"><img src="docs/media/mockup-gapp-inicio.webp" alt="Início do app de gestão com a meta do mês e as próximas entregas."><br><sub><b>Início</b></sub></td>
-    <td width="33%" align="center"><img src="docs/media/mockup-gapp-receita.webp" alt="Editor de receita no app: margem de lucro, preço do cardápio, gramatura e foto."><br><sub><b>Editor de receita</b>: margem, preço e foto.</sub></td>
-    <td width="33%" align="center"><img src="docs/media/mockup-gapp-mais.webp" alt="Menu Mais do app: cardápio, categorias, fornecedores, cupons, venda presencial e devoluções."><br><sub><b>Mais</b>: cardápio, cupons, venda presencial e devoluções.</sub></td>
+    <td width="33%" align="center"><img src="docs/media/mockup-app-home.webp" alt="App home screen with the house title and the Place order button."><br><sub><b>Home</b></sub></td>
+    <td width="33%" align="center"><img src="docs/media/mockup-app-itens.webp" alt="App menu with item cards, including the brand placeholder for an item without a photo."><br><sub><b>Menu</b>: with no photo, the brand symbol steps in.</sub></td>
+    <td width="33%" align="center"><img src="docs/media/mockup-app-novo-pedido.webp" alt="New order in the app, step 1 of 5, with a cookie already added and the total at the bottom."><br><sub><b>New order</b> in 5 steps.</sub></td>
   </tr>
   <tr>
-    <td align="center"><img src="docs/media/mockup-gapp-metas.webp" alt="Metas de venda no app: anel de progresso do mês e campos das metas."><br><sub><b>Metas</b></sub></td>
-    <td align="center"><img src="docs/media/mockup-gapp-pedidos.webp" alt="Pedidos no app, com filtros por status e a lista de encomendas."><br><sub><b>Pedidos</b></sub></td>
-    <td align="center"><img src="docs/media/mockup-gapp-entrar.webp" alt="Entrada do app de gestão com usuário e senha."><br><sub><b>Entrar</b></sub></td>
+    <td align="center"><img src="docs/media/mockup-app-pedidos.webp" alt="My orders in the app, with timeline and payment confirmation."><br><sub><b>My orders</b></sub></td>
+    <td align="center"><img src="docs/media/mockup-app-entrar.webp" alt="App sign-in with Google or email and password."><br><sub><b>Sign in</b></sub></td>
+    <td align="center"><img src="docs/media/mockup-app-cardapio.webp" alt="Start of the menu in the app, with the category filter and the featured combo."><br><sub><b>Categories</b> one tap away.</sub></td>
   </tr>
 </table>
 
-> Como no app do cliente, as telas do app de gestão são o mesmo código Flutter compilado para web numa janela de celular (390×844), contra a API de mentira.
+**The app in motion**
+
+<table>
+  <tr>
+    <td align="center"><img src="docs/media/app-cardapio.gif" width="300" alt="Scrolling the app home screen down to the menu and back to the top."><br><sub>Browsing the menu.</sub></td>
+    <td align="center"><img src="docs/media/app-pedido.gif" width="300" alt="Opening a new order in the app, choosing items and advancing to the Your details step."><br><sub>Building an order.</sub></td>
+  </tr>
+</table>
+
+> The app captures come from the same Flutter code compiled for the web and opened in a phone-sized window (390×844), against a mock API. The device frame is drawn in HTML/CSS; the screen content is the app's own.
 
 ---
 
-## Animação da tela inicial
+## Management apps
 
-O biscoito rosa do logo aparece inteiro, **treme, leva três mordidas** (com migalhas saltando de cada uma) e se assenta no logo estático. O GIF do topo é a animação real, gravada do site rodando. Há também uma versão em vídeo: [`docs/media/hero-loop.mp4`](docs/media/hero-loop.mp4).
+The baker's web dashboard and Android app, also in real captures with fictional data (an invented confectionery, with sample inventory, recipes, orders and goals). The prices and margins shown come from the **same production calculation** (`shared/pricing.ts`), not from hand-typed numbers.
 
-**Como foi feita** (`frontend/lib/logo-intro.ts` e `frontend/components/LogoIntro.tsx`):
+<p align="center">
+  <img src="docs/media/mockup-gestao-apps.webp" width="880" alt="The baker's web dashboard on a laptop and the management app on two phones, showing the month summary and the ingredient inventory.">
+</p>
 
-- **anime.js v4, uma linha do tempo só**: entrada, tremor, três mordidas e migalhas no mesmo relógio.
-- **SVG puro, sem imagem**: a geometria vem do próprio path do logo (um disco menos três círculos). Durante a cena, as mordidas são círculos de *máscara* que crescem do zero, então são transparentes de verdade em qualquer fundo.
-- **Migalhas com física simples**: polígonos irregulares, cada um com impulso, pulinho, gravidade, giro e fade.
-- **O final é o logo oficial**: ao terminar, a cena é trocada pelo path do arquivo de marca. O estado final é o logo, sem sobra de transformação, máscara ou migalha.
-- **Repete no hover** (no celular, no toque). A repetição parte do logo pronto, "refaz" o biscoito e termina de novo no logo, por isso o GIF fecha o loop sem corte: o primeiro e o último quadro da gravação são idênticos (diferença de pixel igual a zero).
+### Web dashboard
 
-**Performance e acessibilidade**
+<table>
+  <tr>
+    <td width="50%" align="center"><img src="docs/media/mockup-gweb-inicio.webp" alt="Dashboard home: progress ring for the month's goal, revenue, profit, upcoming deliveries, items to restock and most profitable recipes."><br><sub><b>Home</b>: the month's goal, upcoming deliveries and what needs restocking.</sub></td>
+    <td width="50%" align="center"><img src="docs/media/mockup-gweb-receitas.webp" alt="Recipes and prices: cards with cost per unit, suggested price, profit and margin for each product."><br><sub><b>Recipes and prices</b>: cost, price and margin of each product, calculated automatically.</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="docs/media/mockup-gweb-estoque.webp" alt="Ingredient inventory: table with quantity, packaging, cost per unit and status of each item."><br><sub><b>Inventory</b>: cost per unit and status of each ingredient.</sub></td>
+    <td align="center"><img src="docs/media/mockup-gweb-pedidos.webp" alt="Orders: status filters, totals and the list of orders with delivery, amount, status and payment."><br><sub><b>Orders</b>: from intake to delivery, with payment alongside.</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="docs/media/mockup-gweb-metas.webp" alt="Sales goals: progress ring and four goals (revenue, orders, average ticket and new customers) against actuals."><br><sub><b>Goals</b>: actuals against target, with no retyping.</sub></td>
+    <td align="center"><img src="docs/media/mockup-gweb-custos.webp" alt="Costs and adjustments: the month's fixed and variable expenses and the basis of the price calculation."><br><sub><b>Costs and adjustments</b>: the month's expenses go into each recipe's price.</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="docs/media/mockup-gweb-cardapio.webp" alt="Menu: product list with switches to appear on the website, show ingredients and allergy badges."><br><sub><b>Menu</b>: what the customer sees, with allergy badges.</sub></td>
+    <td align="center"><img src="docs/media/mockup-gweb-entrar.webp" alt="Dashboard sign-in screen: pink panel with the headline Know how much to charge for each sweet and the username and password form."><br><sub><b>Sign in</b>: access by URL only, no link on the public page.</sub></td>
+  </tr>
+</table>
 
-- A biblioteca de animação é carregada sob demanda (`import()` dinâmico): fica fora do JS inicial da página.
-- Só começa quando pelo menos metade do logo está na tela (`IntersectionObserver`).
-- Tudo é escrito como atributo SVG a cada quadro, sem estilo inline sobrando.
-- `prefers-reduced-motion: reduce` mostra direto o logo pronto, sem animar nem repetir.
-- O SVG tem `role="img"` e `aria-label`; sem JavaScript, um `<noscript>` mostra o logo estático.
+### Management Android app
+
+<p align="center">
+  <img src="docs/media/mockup-gapp-telas.webp" width="880" alt="Four management app screens on phones: home, inventory, recipes and orders.">
+</p>
+
+<table>
+  <tr>
+    <td width="33%" align="center"><img src="docs/media/mockup-gapp-inicio.webp" alt="Management app home with the month's goal and upcoming deliveries."><br><sub><b>Home</b></sub></td>
+    <td width="33%" align="center"><img src="docs/media/mockup-gapp-receita.webp" alt="Recipe editor in the app: profit margin, menu price, weight and photo."><br><sub><b>Recipe editor</b>: margin, price and photo.</sub></td>
+    <td width="33%" align="center"><img src="docs/media/mockup-gapp-mais.webp" alt="The app's More menu: menu, categories, suppliers, coupons, in-person sales and refunds."><br><sub><b>More</b>: menu, coupons, in-person sales and refunds.</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="docs/media/mockup-gapp-metas.webp" alt="Sales goals in the app: the month's progress ring and goal fields."><br><sub><b>Goals</b></sub></td>
+    <td align="center"><img src="docs/media/mockup-gapp-pedidos.webp" alt="Orders in the app, with status filters and the list of orders."><br><sub><b>Orders</b></sub></td>
+    <td align="center"><img src="docs/media/mockup-gapp-entrar.webp" alt="Management app sign-in with username and password."><br><sub><b>Sign in</b></sub></td>
+  </tr>
+</table>
+
+> As with the customer app, the management app screens are the same Flutter code compiled for the web in a phone-sized window (390×844), against the mock API.
 
 ---
 
-## Decisões de design
+## Home screen animation
 
-**Direção**: confeitaria artesanal contemporânea, com a mesa de bancada, a massa crua, o cacau e o rosa da marca. O doce (a foto) é o protagonista; o resto é moldura quieta. Mobile-first, porque quase todo acesso vem do celular. O briefing completo está em `frontend/PRODUCT.md` e `frontend/DESIGN.md`.
+The pink cookie from the logo appears whole, **shakes, takes three bites** (with crumbs flying from each) and settles into the static logo. The GIF at the top is the real animation, recorded from the running website. There is also a video version: [`docs/media/hero-loop.mp4`](docs/media/hero-loop.mp4).
 
-**Paleta** (tokens do site em `frontend/app/site.css`; o app usa os mesmos valores em `mobile-common/lib/ui/theme.dart`):
+**How it was made** (`frontend/lib/logo-intro.ts` and `frontend/components/LogoIntro.tsx`):
 
-| Papel | Valor | Por quê |
+- **anime.js v4, a single timeline**: entrance, shake, three bites and crumbs on the same clock.
+- **Pure SVG, no image**: the geometry comes from the logo's own path (a disc minus three circles). During the scene, the bites are *mask* circles that grow from zero, so they are truly transparent on any background.
+- **Crumbs with simple physics**: irregular polygons, each with impulse, a little hop, gravity, spin and fade.
+- **The ending is the official logo**: when it finishes, the scene is swapped for the brand file's path. The final state is the logo, with no leftover transform, mask or crumb.
+- **Replays on hover** (on a phone, on tap). The replay starts from the finished logo, "rebuilds" the cookie and ends on the logo again, which is why the GIF closes the loop with no cut: the first and last frames of the recording are identical (pixel difference of zero).
+
+**Performance and accessibility**
+
+- The animation library is loaded on demand (dynamic `import()`): it stays out of the page's initial JS.
+- It only starts when at least half of the logo is on screen (`IntersectionObserver`).
+- Everything is written as SVG attributes on each frame, with no inline style left over.
+- `prefers-reduced-motion: reduce` shows the finished logo straight away, with no animation or replay.
+- The SVG has `role="img"` and `aria-label`; without JavaScript, a `<noscript>` shows the static logo.
+
+---
+
+## Design decisions
+
+**Direction**: contemporary artisanal confectionery, with the countertop, raw dough, cocoa and the brand pink. The sweet (the photo) is the protagonist; the rest is a quiet frame. Mobile-first, because almost all traffic comes from phones. The full brief is in `frontend/PRODUCT.md` and `frontend/DESIGN.md`.
+
+**Palette** (website tokens in `frontend/app/site.css`; the app uses the same values in `mobile-common/lib/ui/theme.dart`):
+
+| Role | Value | Why |
 |---|---|---|
-| Fundo creme | `#FBF3EA` | calor de papel de padaria no lugar do branco frio |
-| Tinta cacau | `#2A160F` | texto com contraste alto (15,7:1 sobre o creme, segundo o `DESIGN.md`) |
-| Chocolate | `#3A1D12` | faixas escuras que dão ritmo à página |
-| Rosa da marca | `#E94B8A` | preenchimento e decoração; fica raro, para ter intenção |
-| Rosa de ação | `#D42A76` | botão principal (4,6:1 com texto claro) |
-| Rosa de texto | `#A81857` | links e chips (6,5:1) |
+| Cream background | `#FBF3EA` | the warmth of bakery paper instead of cold white |
+| Cocoa ink | `#2A160F` | high-contrast text (15.7:1 on the cream, according to `DESIGN.md`) |
+| Chocolate | `#3A1D12` | dark bands that give the page rhythm |
+| Brand pink | `#E94B8A` | fill and decoration; kept rare, so it feels intentional |
+| Action pink | `#D42A76` | primary button (4.6:1 with light text) |
+| Text pink | `#A81857` | links and chips (6.5:1) |
 
-O rosa da marca não é usado como cor de texto (contraste baixo no creme). Para isso existe um rosa mais escuro.
+The brand pink is not used as a text color (low contrast on the cream). A darker pink exists for that.
 
-**Tipografia**: títulos em **Young Serif** (o lado caseiro, contra o logo, que é um grotesco pesado) e texto e preços em **Figtree**. As duas fontes são empacotadas com o projeto, sem pedir nada a servidor de terceiros: no site pelo `@fontsource` (só o subset latino, `font-display: swap`) e no app como arquivos de fonte.
+**Typography**: headings in **Young Serif** (the homey side, against the logo, which is a heavy grotesque) and body text and prices in **Figtree**. Both fonts are bundled with the project, asking nothing from third-party servers: on the website through `@fontsource` (Latin subset only, `font-display: swap`) and in the app as font files.
 
-**Forma**: moldura em arco para a foto principal (lembra a boca do forno), cartões com cantos de 24 px, botão em pílula, profundidade por tom e não por sombra.
+**Shape**: arch frame for the main photo (reminiscent of the oven's mouth), cards with 24 px corners, pill buttons, depth through tone rather than shadow.
 
-**Sem foto, a marca ocupa o lugar**: o item sem foto mostra o símbolo do cookie sobre um tom do doce (caramelo para cookie, marrom para brownie, rosa suave para o resto). Foi uma decisão deliberada: o cardápio fica coeso mesmo quando nem todo item tem foto.
+**With no photo, the brand takes its place**: an item without a photo shows the cookie symbol over a tone of the sweet (caramel for cookie, brown for brownie, soft pink for the rest). This was a deliberate decision: the menu stays cohesive even when not every item has a photo.
 
-**Sistema de componentes**: o site público tem os estilos isolados sob `.rk-site` (nada vaza para a área logada). O app monta o tema em um `ThemeExtension` (`AppColors`) com versão clara e escura.
+**Component system**: the public website has its styles isolated under `.rk-site` (nothing leaks into the logged-in area). The app builds its theme in a `ThemeExtension` (`AppColors`) with light and dark versions.
 
-**Responsividade**: o site é mobile-first com escala de tipografia fluida; o app foi desenhado para telas de celular.
+**Responsiveness**: the website is mobile-first with a fluid type scale; the app was designed for phone screens.
 
-**Acessibilidade** (o que está no código):
+**Accessibility** (what is in the code):
 
-- link "Ir para o cardápio" no topo, para quem navega por teclado;
-- `lang="pt-BR"`, hierarquia de títulos e regiões nomeadas (`aria-labelledby`);
-- `prefers-reduced-motion` respeitado no splash do logo, na rolagem suave e nas animações de entrada e de revelação por rolagem;
-- no app, rótulos `Semantics` nas telas de pedido e de pedidos;
-- as diretrizes de projeto são WCAG AA, foco visível e alvos de toque de pelo menos 44 px (registradas no `PRODUCT.md`).
+- a "Skip to the menu" link at the top, for keyboard navigation;
+- `lang="pt-BR"`, heading hierarchy and named regions (`aria-labelledby`);
+- `prefers-reduced-motion` respected in the logo splash, smooth scrolling, and entrance and scroll-reveal animations;
+- in the app, `Semantics` labels on the order and orders screens;
+- the project guidelines are WCAG AA, visible focus and touch targets of at least 44 px (recorded in `PRODUCT.md`).
 
-**Tema escuro**: o app tem uma variante "à noite", com chocolate no lugar do creme. O site (público e área do cliente) é só claro.
-
----
-
-## Decisões de SEO (site)
-
-Só o que existe no código:
-
-- **Metadados**: `title` com modelo (`%s · Raykookie`), `description`, `keywords`, `applicationName`, `metadataBase` e **URL canônica** por página (`/` e `/cardapio`). Robôs com `index, follow` e `max-image-preview: large`.
-- **Open Graph e Twitter Cards**: `og:*` com `locale pt_BR`, imagem de 1200×630 com texto alternativo e `summary_large_image`. O `/cardapio` repete a imagem no próprio Open Graph, senão o link compartilhado sairia sem foto.
-- **`sitemap.xml`** gerado em código, com as páginas públicas (início, cardápio, termos, privacidade e exclusão de conta), frequência e prioridade.
-- **`robots.txt`** gerado em código: libera o site, bloqueia a API, a área logada e o link de pagamento, mas **libera `/api/fotos/`** (a regra mais específica vence), para o Google conseguir renderizar as fotos da home.
-- **`noindex` onde faz sentido**: toda a área do cliente (`/cliente/…`, que inclui o login e os pedidos). Ela continua rastreável de propósito (o `robots.txt` não a bloqueia por completo), porque o Google só lê o `noindex` se puder acessar a página.
-- **Dados estruturados (JSON-LD, schema.org)**: um `@graph` com `WebSite` e `Bakery` (nome, imagem, link do cardápio, moeda e formas de pagamento aceitas, Instagram). O JSON é escapado contra injeção de `<`.
-- **Manifesto web** (`manifest.webmanifest`), ícones (`.ico`, SVG e `apple-touch-icon`) e `theme-color`.
-- **Verificação do Google Search Console** via metatag.
-- **Estratégia de renderização**: **SSR sob demanda** nas páginas que dependem do cardápio. A home e o cardápio buscam os dados no servidor, com cache curto no `fetch`, então o HTML já chega com os itens, os nomes e as fotos; o robô não depende de JavaScript para ver o cardápio. Termos e privacidade são **estáticos**, pré-renderizados no build.
-- **URLs semânticas** em português: `/cardapio`, `/termos`, `/privacidade`, `/excluir-conta`.
-- **Imagens**: dimensões declaradas (sem salto de layout), `loading="lazy"` e `decoding="async"`, e `fetchPriority="high"` na primeira foto do cardápio. As fotos de vitrine da home usam versões reduzidas (800 px) e têm texto alternativo.
-- **Performance**: no build de produção local, a home pesa **162 kB de JS na primeira carga** (102 kB compartilhados). As fontes são empacotadas e a biblioteca de animação é carregada sob demanda. O projeto também tem o **Vercel Speed Insights** ligado, que mede os Core Web Vitals reais em produção.
+**Dark theme**: the app has a "night" variant, with chocolate in place of cream. The website (public and customer area) is light only.
 
 ---
 
-## Decisões técnicas
+## SEO decisions (website)
 
-### Site
+Only what exists in the code:
 
-| | |
-|---|---|
-| **Stack** | Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS 4 + CSS próprio do site público, anime.js 4, lucide-react |
-| **Dados** | Server Components buscam o cardápio no servidor; só o que é interativo é Client Component |
-| **Mesma origem** | o Next repassa `/api/*` à API (rewrite): do ponto de vista do navegador não há CORS e o cookie de sessão funciona sem ajustes |
-| **Estado na URL** | o item escolhido e a origem do clique vão na URL; sem sessão, o login devolve a pessoa exatamente para ela. O destino pós-login é validado (`safeNext`) |
-| **Erros** | se a API falhar, o cardápio público degrada para vazio em vez de derrubar a página; há página 404 própria |
-| **Segurança** | cabeçalhos em todas as respostas: CSP (impondo `frame-ancestors`, `base-uri`, `object-src` e `form-action`), HSTS, `nosniff`, `X-Frame-Options`, `Referrer-Policy` e `Permissions-Policy`. A CSP completa roda em modo relatório |
-| **Código compartilhado** | `shared/` guarda tipos e regras em TypeScript puro, usados pelo site |
-
-### App Android
-
-| | |
-|---|---|
-| **Stack** | Flutter, `provider` para estado, `go_router` para navegação, `http`, `intl` (pt_BR) |
-| **Código comum** | o pacote `mobile-common` (API, sessão, modelos, tema e widgets) é compartilhado com o outro app da casa |
-| **Navegação** | rotas declarativas com guardas: telas de pedidos exigem login e voltam ao destino certo depois (`?next=`, só caminhos internos) |
-| **Sessão** | o token fica no cofre do sistema (Keystore no Android, Keychain no iOS); 401 expira a sessão e leva ao login |
-| **Offline e erros** | a abertura não trava sem internet (leitura local do token, com limite de 8 s para o servidor); toda chamada tem timeout de 30 s e devolve mensagens em português: "sem conexão" e "o servidor demorou" |
-| **Login** | Google (`google_sign_in`) ou e-mail e senha |
-| **Avisos** | notificações push (Firebase) para mudanças no pedido, pedindo permissão com um cartão "Quer saber quando o pedido mudar?"; sem Firebase no build, o app segue sem avisos |
-| **Atualização** | o app confere se há build mais novo, baixa o APK dentro dele, confere o `sha256` e abre o instalador; a confirmação final é do Android |
-| **Medição** | análise de uso anônima, **desligada por padrão** (só entra com uma flag de build) |
-| **Testes** | 78 testes de widget e unitários passando no app cliente, mais os do pacote comum |
-
-### App Android de gestão
-
-| | |
-|---|---|
-| **Stack** | Flutter, `provider`, `go_router`, o mesmo `mobile-common` do app do cliente |
-| **Navegação** | cinco abas (Início, Estoque, Receitas, Pedidos, Mais) e telas cheias por cima, com guarda de sessão da dona |
-| **Cálculo de preço** | o preço é calculado **no aparelho em tempo real** enquanto se edita a receita e **no servidor** ao salvar; a regra existe em Dart (`mobile-common/lib/core/pricing.dart`) e em TypeScript (`shared/pricing.ts`), cada uma com testes próprios |
-| **Venda presencial** | Pix estático por produto que funciona sem internet e sem login, com a chave guardada no aparelho |
-| **Nota fiscal** | lê o QR da NFC-e e dá entrada no estoque, com tela de revisão antes de gravar |
-| **Segurança** | biometria para abrir o app, token no cofre do sistema e avisos push de pedido novo, com som próprio |
-
-### API (backend Java)
-
-A API de produção foi **reconstruída em Java** a partir da versão Node original, mantendo o contrato HTTP para que site e apps não precisassem mudar.
-
-| | |
-|---|---|
-| **Stack** | Java 25, Spring Boot, PostgreSQL, Flyway, empacotada em Docker |
-| **Módulos** | `backend-java/modules`: `catalog`, `orders`, `payments`, `refunds`, `purchasing`, `customers`, `identity`, `engagement`, `feedback`, `insights`, `notifications`, `releases` e `storefront`, cada um em camadas (domínio, aplicação, adaptadores) |
-| **Plataforma** | `backend-java/platform`: `kernel`, `web`, `persistence`, `security`, `ratelimit`, `scheduling`, `audit`, `observability` e `testing` |
-| **Pagamentos** | Pix e cartão pelo Mercado Pago (API Orders), **webhook com assinatura obrigatória** e pagamento sempre reconsultado na API do Mercado Pago; reenvio idempotente; devolução automática |
-| **Regra no servidor** | o preço, o desconto do cupom e o "pago" nunca vêm do cliente: o corpo do pedido só diz *o que* e *quantos* |
-| **Controle de acesso** | toda rota declara o seu nível (`@Access`: dona, cliente, link de pagamento, webhook assinado ou pública) e os testes falham se alguma não declarar |
-| **Defesas** | senha com scrypt, sessão guardada como hash, limites de tentativa no banco, cabeçalhos de segurança e CSP |
-| **Auditoria** | histórico **somente-inserção** de estoque, receitas, preços, cupons e pedidos |
-| **Tarefas agendadas** | rodam dentro do servidor (sem cron externo) |
-
-### Qualidade e entrega
-
-- **Testes contra Postgres de verdade**: a API usa Testcontainers, não banco em memória.
-- **Regras de arquitetura como teste**: um teste de arquitetura (ArchUnit) impede dependências entre camadas e módulos fora do desenho, e um teste de matriz de acesso confere o `@Access` de cada rota.
-- **Checkstyle e cobertura (JaCoCo)** no `mvnw verify`.
-- **Paridade entre linguagens**: as regras de preço, dinheiro, devolução, engajamento e textos legais existem em TypeScript (site) e em Java (API). O CI regera os vetores de teste a partir do TypeScript e compara com os do Java (`backend-java/rules-vectors`).
-- **Migrações aditivas**: o histórico de migrations é conferido por checksum no CI.
-- **CI/CD**: o CI roda só o que mudou e o CD, a cada push na `main`, compila e **assina os APKs**, confere o fingerprint do certificado, publica em Releases e implanta a API com **volta automática** à imagem anterior se a saúde não voltar em 2 minutos.
-- **Segurança testada**: há testes de ataque (cabeçalhos, XSS, controle de acesso).
+- **Metadata**: `title` with a template (`%s · Raykookie`), `description`, `keywords`, `applicationName`, `metadataBase` and a **canonical URL** per page (`/` and `/cardapio`). Robots with `index, follow` and `max-image-preview: large`.
+- **Open Graph and Twitter Cards**: `og:*` with `locale pt_BR`, a 1200×630 image with alt text and `summary_large_image`. `/cardapio` repeats the image in its own Open Graph, otherwise the shared link would come out without a photo.
+- **`sitemap.xml`** generated in code, with the public pages (home, menu, terms, privacy and account deletion), frequency and priority.
+- **`robots.txt`** generated in code: allows the site, blocks the API, the logged-in area and the payment link, but **allows `/api/fotos/`** (the most specific rule wins), so Google can render the home page photos.
+- **`noindex` where it makes sense**: the whole customer area (`/cliente/…`, which includes login and orders). It remains crawlable on purpose (`robots.txt` doesn't block it entirely), because Google only reads `noindex` if it can access the page.
+- **Structured data (JSON-LD, schema.org)**: a `@graph` with `WebSite` and `Bakery` (name, image, menu link, currency and accepted payment methods, Instagram). The JSON is escaped against `<` injection.
+- **Web manifest** (`manifest.webmanifest`), icons (`.ico`, SVG and `apple-touch-icon`) and `theme-color`.
+- **Google Search Console verification** via meta tag.
+- **Rendering strategy**: **on-demand SSR** on the pages that depend on the menu. The home page and the menu fetch data on the server, with a short `fetch` cache, so the HTML already arrives with the items, names and photos; the crawler doesn't depend on JavaScript to see the menu. Terms and privacy are **static**, pre-rendered at build time.
+- **Semantic URLs** in Portuguese: `/cardapio`, `/termos`, `/privacidade`, `/excluir-conta`.
+- **Images**: declared dimensions (no layout shift), `loading="lazy"` and `decoding="async"`, and `fetchPriority="high"` on the first menu photo. The home page showcase photos use reduced versions (800 px) and have alt text.
+- **Performance**: in the local production build, the home page weighs **162 kB of JS on first load** (102 kB shared). Fonts are bundled and the animation library is loaded on demand. The project also has **Vercel Speed Insights** enabled, which measures real Core Web Vitals in production.
 
 ---
 
-## Sobre o negócio
+## Technical decisions
 
-A Raykookie é uma confeitaria artesanal pequena. Nasceu na cozinha de casa, com uma receita de cookie, e hoje faz cookies, brownies, tortas, bolos e docinhos. Tudo é preparado em pequenas fornadas e **somente sob encomenda**, para chegar fresco a quem pediu.
+### Website
 
-Quase toda a clientela chega pelo Instagram e decide rápido: vê as fotos, escolhe e quer pedir sem complicação. O site e o app existem para deixar esse caminho curto e claro, com um cardápio que reflete o que a casa está oferecendo, um pedido que a pessoa monta sozinha e um acompanhamento simples até o doce chegar.
+| | |
+|---|---|
+| **Stack** | Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS 4 + the public site's own CSS, anime.js 4, lucide-react |
+| **Data** | Server Components fetch the menu on the server; only what is interactive is a Client Component |
+| **Same origin** | Next forwards `/api/*` to the API (rewrite): from the browser's point of view there is no CORS and the session cookie works without adjustments |
+| **State in the URL** | the chosen item and the click's origin go in the URL; without a session, login returns the person exactly to it. The post-login destination is validated (`safeNext`) |
+| **Errors** | if the API fails, the public menu degrades to empty instead of taking the page down; there is a custom 404 page |
+| **Security** | headers on all responses: CSP (enforcing `frame-ancestors`, `base-uri`, `object-src` and `form-action`), HSTS, `nosniff`, `X-Frame-Options`, `Referrer-Policy` and `Permissions-Policy`. The full CSP runs in report-only mode |
+| **Shared code** | `shared/` holds types and rules in plain TypeScript, used by the website |
 
-O produto resolve o problema de uma operação pequena que quer manter o jeito caseiro, sem abrir mão de um atendimento organizado.
+### Android app
+
+| | |
+|---|---|
+| **Stack** | Flutter, `provider` for state, `go_router` for navigation, `http`, `intl` (pt_BR) |
+| **Shared code** | the `mobile-common` package (API, session, models, theme and widgets) is shared with the house's other app |
+| **Navigation** | declarative routes with guards: order screens require login and return to the right destination afterwards (`?next=`, internal paths only) |
+| **Session** | the token is kept in the system vault (Keystore on Android, Keychain on iOS); a 401 expires the session and leads to login |
+| **Offline and errors** | startup doesn't hang without internet (local token read, with an 8 s limit for the server); every call has a 30 s timeout and returns messages in Portuguese: "no connection" and "the server took too long" |
+| **Login** | Google (`google_sign_in`) or email and password |
+| **Notifications** | push notifications (Firebase) for order changes, asking permission with a "Want to know when the order changes?" card; without Firebase in the build, the app carries on without notifications |
+| **Updates** | the app checks for a newer build, downloads the APK inside itself, verifies the `sha256` and opens the installer; the final confirmation is Android's |
+| **Analytics** | anonymous usage analytics, **off by default** (only enabled with a build flag) |
+| **Tests** | 78 widget and unit tests passing in the customer app, plus those of the shared package |
+
+### Management Android app
+
+| | |
+|---|---|
+| **Stack** | Flutter, `provider`, `go_router`, the same `mobile-common` as the customer app |
+| **Navigation** | five tabs (Home, Inventory, Recipes, Orders, More) and full-screen views on top, with the owner's session guard |
+| **Price calculation** | the price is calculated **on the device in real time** while the recipe is being edited and **on the server** on save; the rule exists in Dart (`mobile-common/lib/core/pricing.dart`) and in TypeScript (`shared/pricing.ts`), each with its own tests |
+| **In-person sales** | static Pix per product that works without internet and without login, with the key stored on the device |
+| **Invoice** | reads the NFC-e QR and stocks items into inventory, with a review screen before saving |
+| **Security** | biometrics to open the app, token in the system vault and push notifications for new orders, with a dedicated sound |
+
+### API (Java backend)
+
+The production API was **rebuilt in Java** from the original Node version, keeping the HTTP contract so that the website and apps didn't need to change.
+
+| | |
+|---|---|
+| **Stack** | Java 25, Spring Boot, PostgreSQL, Flyway, packaged in Docker |
+| **Modules** | `backend-java/modules`: `catalog`, `orders`, `payments`, `refunds`, `purchasing`, `customers`, `identity`, `engagement`, `feedback`, `insights`, `notifications`, `releases` and `storefront`, each in layers (domain, application, adapters) |
+| **Platform** | `backend-java/platform`: `kernel`, `web`, `persistence`, `security`, `ratelimit`, `scheduling`, `audit`, `observability` and `testing` |
+| **Payments** | Pix and card through Mercado Pago (Orders API), **webhook with mandatory signature** and payment always re-queried from the Mercado Pago API; idempotent retries; automatic refund |
+| **Server-side rules** | the price, the coupon discount and "paid" never come from the client: the order body only says *what* and *how many* |
+| **Access control** | every route declares its level (`@Access`: owner, customer, payment link, signed webhook or public) and the tests fail if any route doesn't declare one |
+| **Defenses** | passwords with scrypt, session stored as a hash, attempt limits in the database, security headers and CSP |
+| **Audit** | **insert-only** history of inventory, recipes, prices, coupons and orders |
+| **Scheduled tasks** | run inside the server (no external cron) |
+
+### Quality and delivery
+
+- **Tests against a real Postgres**: the API uses Testcontainers, not an in-memory database.
+- **Architecture rules as tests**: an architecture test (ArchUnit) prevents dependencies between layers and modules outside the design, and an access-matrix test checks the `@Access` of every route.
+- **Checkstyle and coverage (JaCoCo)** in `mvnw verify`.
+- **Cross-language parity**: the rules for pricing, money, refunds, engagement and legal texts exist in TypeScript (website) and in Java (API). CI regenerates the test vectors from the TypeScript and compares them with the Java ones (`backend-java/rules-vectors`).
+- **Additive migrations**: the migration history is verified by checksum in CI.
+- **CI/CD**: CI runs only what changed, and CD, on every push to `main`, builds and **signs the APKs**, checks the certificate fingerprint, publishes to Releases and deploys the API with **automatic rollback** to the previous image if health doesn't return within 2 minutes.
+- **Tested security**: there are attack tests (headers, XSS, access control).
 
 ---
 
+## About the business
+
+Raykookie is a small artisanal confectionery. It was born in a home kitchen, with a cookie recipe, and today makes cookies, brownies, tarts, cakes and little sweets. Everything is prepared in small batches and **only to order**, so it arrives fresh for whoever ordered it.
+
+Almost all of the clientele arrives through Instagram and decides quickly: they see the photos, choose and want to order without hassle. The website and the app exist to keep that path short and clear, with a menu that reflects what the house is offering, an order the person puts together on their own, and simple tracking until the sweet arrives.
+
+The product solves the problem of a small operation that wants to keep its homemade feel without giving up organized service.
+
+---
